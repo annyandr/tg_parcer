@@ -1,5 +1,6 @@
 import json
 import os
+import asyncio
 from telethon import TelegramClient
 from dotenv import load_dotenv
 
@@ -46,6 +47,11 @@ async def parse_channel(channel_username, limit=100):
     
     print(f"Сохранено {len(messages)} постов в {channel_username}_posts.json")
 
-# Запуск
-with client:
-    client.loop.run_until_complete(parse_channel('profgynecologist', limit=50))
+# Главная функция
+async def main():
+    async with client:
+        await parse_channel('profgynecologist', limit=50)
+
+# Запуск (исправленный для Windows)
+if __name__ == '__main__':
+    asyncio.run(main())
